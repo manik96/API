@@ -10,8 +10,11 @@
     </head>
     <body>
         <h1>'The Loader'</h1>
-        <p>Here is where the program presents the current state of the database.</p>
-        <p>The provided links are for updating or deleting elements in the database.</p>
+        <p>Aqui es donde el programa presenta el estado actual de la base de datos.</p>
+        <p>Los siguientes links son para crear, actualizar o eliminar elementos en la base de datos.</p>
+        <li><a href="{{ url_for('loader.create') }}">Crear entrada</a></li>
+        <li><a href="{{ url_for('/') }}">Actualizar entrada</a></li>
+        <li><a href="{{ url_for('/') }}">Eliminar entrada</a></li>
         <hr>
         <table>
             <tr>
