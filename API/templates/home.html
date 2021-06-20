@@ -9,12 +9,11 @@
         </style>
     </head>
     <body>
-        <h1>Welcome to 'The Loader'</h1>
-        <p>This is a small program that is designed to read a large data set.</p>
-        <p>It will allow the user to upload a .xlsx file to play with.</p>
-        <p>This program allows the user to create, read, update or delete entries in the given file.</p>
-        <hr>
-        <p>The following link is used for testing purposes</p>
-        <li><a href="{{ url_for('loader.load') }}">Special Link</a></li>
+        <h1>Bienvenidos a 'The Loader'</h1>
+        <p>Este es un pequeño programa que esta diseñado para leer grandes sets de data.</p>
+        <p>Permitira al usario cargar un archivo .xlsx para entender como funciona.</p>
+        <p>Este programa permite al usario crear, leer, actualizar o eliminar elementos en el archivo dado.</p>
+        <p>El siguiente link se utiliza para cargar el archivo a la base de datos.</p>
+        <li><a href="{{ url_for('loader.load') }}">Cargar archivo</a></li>
     </body>
 </html>
