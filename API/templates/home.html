@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Loader</title>
+        <style>
+            body {background-color: lemonchiffon;}
+            h1 {color: darkgreen;}
+            p {color:mediumorchid;}
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to 'The Loader'</h1>
+        <p>This is a small program that is designed to read a large data set.</p>
+        <p>It will allow the user to upload a .xlsx file to play with.</p>
+        <p>This program allows the user to create, read, update or delete entries in the given file.</p>
+        <hr>
+        <p>The following link is used for testing purposes</p>
+        <li><a href="{{ url_for('loader.load') }}">Special Link</a></li>
+    </body>
+</html>
