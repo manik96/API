@@ -36,33 +36,27 @@ def load():
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
-        name = request.form['Nombre']
-        lname = request.form['Apellido']
-        nac = request.form['Nacionalidad']
-        date = request.form['Fecha de Contrato']
-        sex = request.form['Sexo']
+        name = str(request.form['Nombre'])
+        lname = str(request.form['Apellido'])
+        nac = str(request.form['Nacionalidad'])
+        date = str(request.form['Fecha de Contrato'])
+        sex = str(request.form['Sexo'])
         error = None
 
-        if not name:
+        if name == "":
             error = 'Nombre es un campo obligatorio'
-        elif not lname:
+        elif lname == "":
             error = 'Apellido es un campo obligatorio'
-        if not nac:
+        if nac == "":
             nac = "<NA>"
-        if not date:
+        if date == "":
             error = 'Fecha de contrato es un campo obligatorio'
-        elif not sex:
+        elif sex == "":
             error = 'Sexo es un campo obligatorio'
 
         if error is not None:
             flash(error)
         else:
-            name = str(name)
-            lname = str(lname)
-            nac = str(nac)
-            date = str(date)
-            sex = str(sex)
-
             db = get_db()
             db.execute(
                 'INSERT INTO data (nombre, apellido, nacionalidad, fechaContrato, sexo)'
@@ -73,54 +67,34 @@ def create():
 
     return render_template('/create.html')
 
-@bp.route('/update', methods=('GET', 'POST'))
+@bp.route('/update', methods=['GET', 'PUT'])
 def update():
-    if request.method == 'POST':
+    if request.method == 'PUT':
         idn = int(request.form['ID'])
 
-        name = request.form['Nombre']
-        lname = request.form['Apellido']
-        nac = request.form['Nacionalidad']
-        date = request.form['Fecha de Contrato']
-        sex = request.form['Sexo']
+        name = str(request.form['Nombre']) or "<NA>"
+        lname = str(request.form['Apellido']) or "<NA>"
+        nac = str(request.form['Nacionalidad']) or "<NA>"
+        date = str(request.form['Fecha de Contrato']) or "<NA>"
+        sex = str(request.form['Sexo']) or "<NA>"
         error = None
 
         print(type(name))
 
-        if idn is None:
+        if idn is None or idn == "":
             error = "Se requiere el campo de ID."
         elif not isinstance(idn, int) or idn < 0:
             error = "Solo se aceptan numeros enteros positivos."
-        if name == "":
-            name = "<NA>"
-        if lname == "":
-            lname = "<NA>"
-        if nac == "":
-            nac = "<NA>"
-        if date == "":
-            date = "<NA>"
-        if sex == "":
-            sex = "<NA>"
 
         if error is not None:
             flash(error)
         else:
-            name = str(name)
-            lname = str(lname)
-            nac = str(nac)
-            date = str(date)
-            sex = str(sex)
-
             db = get_db()
 
             number = db.execute('SELECT MAX(id) FROM data').fetchone()
-            number = number[0]
 
-            if idn > number:
-                flash("El numero provisto esta fuera del rango de la base de datos")
-                print("Error en el indice de busqueda")
-                print(idn)
-                print(number)
+            if idn > number[0]:
+                flash("El numero de ID proporcionado es mayor al indice de la base de datos.")
                 return render_template('/update.html')
             
             db.execute(
@@ -132,5 +106,34 @@ def update():
 
             return redirect(url_for('viewer.view'))
 
-
     return render_template('/update.html')
+
+@bp.route('/delete', methods=['GET', 'DELETE'])
+def delete():
+    if request.method == 'POST':
+        idn = int(request.form['ID'])
+        error = None
+
+        if idn == "" or idn is None or 0 < -1:
+            error = 'El numero de ID es requerido.'
+            flash('El numero de ID es requerido.')
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+
+            number = db.execute('SELECT MAX(id) FROM data').fetchone()
+            if idn > number[0]:
+                flash('El numero de ID proporcionado es mayor al indice de la base de datos.')
+                return render_template('/delete.html')
+
+            db.execute(
+                'DELETE FROM data'
+                ' WHERE id=?',(idn)
+            )
+            db.commit()
+
+            return redirect(url_for('viewer.view'))
+
+    return render_template('/delete.html')
