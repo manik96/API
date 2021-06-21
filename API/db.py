@@ -4,6 +4,7 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 def get_db():
+    #Establece una conexion a la base de datos
     if 'database' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -14,13 +15,15 @@ def get_db():
     return g.db
 
 def close_db(e=None):
+    #Finaliza la conexion a la base de datos
     db = g.pop('database', None)
 
     if db is not None:
         db.close()
 
 def init_db():
-    print("Instanciando base de datos.")
+    #Inizializa la base de datos bajo el esquema dado
+    #print("Instanciando base de datos.")
     db = get_db()
 
     with current_app.open_resource('dbscheme.sql') as f:
@@ -34,5 +37,6 @@ def init_db_command():
     click.echo('Base de datos instanciada')
 
 def init_app(app):
+    #Establece como limpiar la base de datos y añade un nuevo comando para flask
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)

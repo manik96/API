@@ -1,3 +1,4 @@
+#Este archivo contiene los principales metodos del programa
 from flask import (Blueprint, Flask, flash, g, render_template, request, redirect, url_for)
 from API.FileTesting import File_loader
 from API.db import get_db, init_db
@@ -6,7 +7,7 @@ bp = Blueprint('loader', __name__)
 
 @bp.route('/load', methods=('GET', 'POST'))
 def load():
-    #Funcion de carga
+    #Metodo utilizado para cargar los datos del archivo
     if request.method == 'POST':
         path = request.form['Absolute Path']
         error = None
@@ -19,6 +20,7 @@ def load():
 
         if error is None:
             db = get_db()
+            #Asegurar que se inserta a una nueva tabla
             init_db()
             for row in state.itertuples(index=False, name=None):
                 name, lname, nac, date, sex = row
@@ -29,14 +31,14 @@ def load():
             db.commit()
             return redirect(url_for('viewer.view'))
 
+        #Mostrar al usario cualquier error ocurrido durante el proceso
         flash(error)
-        print(error)
 
     return render_template('/load.html')
 
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
-    #Funcion de creacion
+    #Metodo para la creacion de nuevos elementos en la tabla
     if request.method == 'POST':
         name = str(request.form['Nombre'])
         lname = str(request.form['Apellido'])
@@ -45,6 +47,7 @@ def create():
         sex = str(request.form['Sexo'])
         error = None
 
+        #Solo el campo de nacionalidad puede estar vacio
         if name == "":
             error = 'Nombre es un campo obligatorio'
         elif lname == "":
@@ -56,7 +59,6 @@ def create():
         if nac == "":
             nac = "<NA>"
 
-        print(error)
         if error is not None:
             flash(error)
         else:
@@ -72,11 +74,12 @@ def create():
 
 @bp.route('/update', methods=['GET', 'POST'])
 def update():
-    #Funcion de actualizado. Se usa POST por jinja
+    #Metodo para actualizar elementos en la tabla
+    #Debido a contricciones de html forms se usa method='POST' y no method='PUT'
     if request.method == 'POST':
 
         error = None
-
+        #Asegurar que se ingresa un elemento valido (int)
         try:  
             idn = int(request.form['ID'])
         except ValueError:
@@ -99,26 +102,23 @@ def update():
         else:
             db = get_db()
 
+            #Corroborar que el numero proporcionado no sea mayor al indice de la tabla
             top = db.execute('SELECT MAX(id) FROM data').fetchone()
-
             if idn > top[0]:
                 flash("El numero de ID proporcionado es mayor al indice de la base de datos.")
                 return render_template('/update.html')
-            
+
+            #Para evitar la perdida de informacion asigna los valores existentes antes de insertar en la tabla
             temp = db.execute('SELECT * FROM data WHERE id=?',(idn,)).fetchone()
 
             if name == "":
                 name = temp[1]
-
             if lname == "":
                 lname = temp[2]
-
             if nac == "":
-                nac = temp[3]
-            
+                nac = temp[3]        
             if date == "":
                 date = temp[4]
-
             if sex == "":
                 sex = temp[5]
 
@@ -135,10 +135,12 @@ def update():
 
 @bp.route('/delete', methods=['GET', 'POST'])
 def delete():
-    #Funcion de borrado. Se usa POST por jinja
+    #Metodo para borrar filas de la tabla
+    #Debido a contricciones de html forms se usa method='POST' y no method='DELETE'
     if request.method == 'POST':
         error = None
 
+        #Asegurar que se ingresa un elemento valido (int)
         try:  
             idn = int(request.form['ID'])
         except ValueError:
@@ -152,7 +154,8 @@ def delete():
             flash(error)
         else:
             db = get_db()
-
+            
+            #Confirmar que el numero ingresado no sea mayor al indice de la tabla
             number = db.execute('SELECT MAX(id) FROM data').fetchone()
             if idn > number[0]:
                 flash('El numero de ID proporcionado es mayor al indice de la base de datos.')

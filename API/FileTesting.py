@@ -1,6 +1,7 @@
 import pandas as pd
 
 def File_loader(path):
+    #Funcion utilizada para probar la ruta del archivo provista
     loc = path
 
     try:
@@ -11,9 +12,12 @@ def File_loader(path):
         return "Error, ruta de archivo equivocada."
     except AssertionError:
         return "Error, ninguna ruta de archivo provista"
+    except ValueError:
+        return "Error, extension no reconocida"
 
     data = data.convert_dtypes()
 
+    #Este resumen se imprime a la consola
     print("Resumen de la data proporcionada por el usario")
     print("----------------------------------------------")
     print(data)
@@ -21,4 +25,3 @@ def File_loader(path):
 
     return data
 
-#data.to_excel("nuevo_datos.xlsx", sheet_name="datos", index=False)
