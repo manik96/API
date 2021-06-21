@@ -3,14 +3,14 @@
     <head>
         <title>The Loader</title>
         <style>
-            body {background-color: lemonchiffon;}
-            h1 {color: darkgreen;}
-            p {color:mediumorchid;}
+            body {background-color:rgb(128, 207, 181);}
+            h1 {color:rgb(92, 70, 218);}
+            p {color:rgb(57, 27, 190);}
         </style>
     </head>
     <body>
         <h1>'The Loader'</h1>
-        <p>Aqui puede crear una nueva entrada a la base datos.</p>
+        <p>Aqui puedes crear una nueva entrada a la base datos.</p>
         <p>Solo el campo de nacionalidad es opcional, el resto es obligatorio</p>
         <form method="POST">
             <label for="Nombre">Nombre</label>
@@ -25,7 +25,7 @@
             <input name="Sexo" id="Sexo">
             <input type="submit" value="Cargar">
             {% for messages in get_flashed_messages() %}
-              {{ messages }}
+              <p style="color:red;" >{{ messages }}</p>
             {% endfor %}
         </form>
         <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>

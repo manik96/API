@@ -3,20 +3,25 @@
     <head>
         <title>The Loader</title>
         <style>
-            body {background-color: lemonchiffon;}
-            h1 {color: darkgreen;}
-            p {color:mediumorchid;}
+            body {background-color:rgb(128, 207, 181);}
+            h1 {color:rgb(92, 70, 218);}
+            p {color:rgb(57, 27, 190);}
         </style>
     </head>
     <body>
         <h1>'The Loader'</h1>
         <p>Aqui es donde el usario provee la ruta del archivo para el programa.</p>
-        <p>Tenga en cuenta que el programa neceista un ruta absoluta para el archivo para funcionar.</p>
+        <p>Tenga en cuenta que el programa neceista la "ruta absoluta" al archivo para funcionar.</p>
         <p>Adicionalmente el programa SOLO acepta extensiones .xlsx</p>
+        <p>Tenga en cuenta que cargar un nuevo archivo causara la perdida de la data actual.</p>
         <form method="POST">
             <label for="Absolute Path">Ruta Absoluta del archivo</label>
             <input name="Absolute Path" id="Absolute Path">
             <input type="submit" value="Upload">
+            <hr>
+            {% for messages in get_flashed_messages() %}
+            <p style="color:red;" >{{ messages }}</p>
+            {% endfor %}
         </form>
     </body>
 </html>

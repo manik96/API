@@ -3,18 +3,20 @@
     <head>
         <title>The Loader</title>
         <style>
-            body {background-color: lemonchiffon;}
-            h1 {color: darkgreen;}
-            p {color:mediumorchid;}
+            body {background-color:rgb(128, 207, 181);}
+            h1 {color:rgb(92, 70, 218);}
+            p {color:rgb(57, 27, 190);}
         </style>
     </head>
     <body>
         <h1>'The Loader'</h1>
         <p>Aqui es donde el programa presenta el estado actual de la base de datos.</p>
         <p>Los siguientes links son para crear, actualizar o eliminar elementos en la base de datos.</p>
-        <li><a href="{{ url_for('loader.create') }}">Crear entrada</a></li>
-        <li><a href="{{ url_for('loader.update') }}">Actualizar entrada</a></li>
-        <li><a href="{{ url_for('loader.delete') }}">Eliminar entrada</a></li>
+        <p>El ultimo link se utiliza para volver al cargador y caragar un nuevo archivo</p>
+        <li><a href="{{ url_for('loader.create') }}">Crear Entrada</a></li>
+        <li><a href="{{ url_for('loader.update') }}">Actualizar Entrada</a></li>
+        <li><a href="{{ url_for('loader.delete') }}">Eliminar Entrada</a></li>
+        <li><a href="{{ url_for('loader.load') }}">Cargar Nueva Data</a></li>
         <hr>
         <table>
             <tr>

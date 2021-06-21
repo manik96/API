@@ -3,9 +3,9 @@
     <head>
         <title>The Loader</title>
         <style>
-            body {background-color: lemonchiffon;}
-            h1 {color: darkgreen;}
-            p {color:mediumorchid;}
+            body {background-color:rgb(128, 207, 181);}
+            h1 {color:rgb(92, 70, 218);}
+            p {color:rgb(57, 27, 190);}
         </style>
     </head>
     <body>
@@ -18,7 +18,7 @@
             <input type="submit" value="Eliminar">
             <hr>
             {% for messages in get_flashed_messages() %}
-              {{ messages }}
+            <p style="color:red;" >{{ messages }}</p>
             {% endfor %}
         </form>
         <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>
