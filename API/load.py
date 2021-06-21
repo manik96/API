@@ -6,6 +6,7 @@ bp = Blueprint('loader', __name__)
 
 @bp.route('/load', methods=('GET', 'POST'))
 def load():
+    #Funcion de carga
     if request.method == 'POST':
         path = request.form['Absolute Path']
         error = None
@@ -35,11 +36,12 @@ def load():
 
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
+    #Funcion de creacion
     if request.method == 'POST':
         name = str(request.form['Nombre'])
         lname = str(request.form['Apellido'])
         nac = str(request.form['Nacionalidad'])
-        date = str(request.form['Fecha de Contrato'])
+        date = str(request.form['FechaContrato'])
         sex = str(request.form['Sexo'])
         error = None
 
@@ -47,13 +49,14 @@ def create():
             error = 'Nombre es un campo obligatorio'
         elif lname == "":
             error = 'Apellido es un campo obligatorio'
-        if nac == "":
-            nac = "<NA>"
-        if date == "":
+        elif date == "":
             error = 'Fecha de contrato es un campo obligatorio'
         elif sex == "":
             error = 'Sexo es un campo obligatorio'
+        if nac == "":
+            nac = "<NA>"
 
+        print(error)
         if error is not None:
             flash(error)
         else:
@@ -67,19 +70,24 @@ def create():
 
     return render_template('/create.html')
 
-@bp.route('/update', methods=['GET', 'PUT'])
+@bp.route('/update', methods=['GET', 'POST'])
 def update():
-    if request.method == 'PUT':
-        idn = int(request.form['ID'])
+    #Funcion de actualizado. Se usa POST por jinja
+    if request.method == 'POST':
 
-        name = str(request.form['Nombre']) or "<NA>"
-        lname = str(request.form['Apellido']) or "<NA>"
-        nac = str(request.form['Nacionalidad']) or "<NA>"
-        date = str(request.form['Fecha de Contrato']) or "<NA>"
-        sex = str(request.form['Sexo']) or "<NA>"
         error = None
 
-        print(type(name))
+        try:  
+            idn = int(request.form['ID'])
+        except ValueError:
+            flash('Numero ID equivocado. Por favor ingresar un numero entero positivo')
+            return render_template('/update.html')
+
+        name = str(request.form['Nombre'])
+        lname = str(request.form['Apellido'])
+        nac = str(request.form['Nacionalidad'])
+        date = str(request.form['FechaContrato'])
+        sex = str(request.form['Sexo'])
 
         if idn is None or idn == "":
             error = "Se requiere el campo de ID."
@@ -91,12 +99,29 @@ def update():
         else:
             db = get_db()
 
-            number = db.execute('SELECT MAX(id) FROM data').fetchone()
+            top = db.execute('SELECT MAX(id) FROM data').fetchone()
 
-            if idn > number[0]:
+            if idn > top[0]:
                 flash("El numero de ID proporcionado es mayor al indice de la base de datos.")
                 return render_template('/update.html')
             
+            temp = db.execute('SELECT * FROM data WHERE id=?',(idn,)).fetchone()
+
+            if name == "":
+                name = temp[1]
+
+            if lname == "":
+                lname = temp[2]
+
+            if nac == "":
+                nac = temp[3]
+            
+            if date == "":
+                date = temp[4]
+
+            if sex == "":
+                sex = temp[5]
+
             db.execute(
                 'UPDATE data'
                 ' SET nombre=?, apellido=?, nacionalidad=?, fechaContrato=?, sexo=?'
@@ -108,15 +133,20 @@ def update():
 
     return render_template('/update.html')
 
-@bp.route('/delete', methods=['GET', 'DELETE'])
+@bp.route('/delete', methods=['GET', 'POST'])
 def delete():
+    #Funcion de borrado. Se usa POST por jinja
     if request.method == 'POST':
-        idn = int(request.form['ID'])
         error = None
 
-        if idn == "" or idn is None or 0 < -1:
-            error = 'El numero de ID es requerido.'
-            flash('El numero de ID es requerido.')
+        try:  
+            idn = int(request.form['ID'])
+        except ValueError:
+            flash('Numero ID equivocado. Por favor ingresar un numero entero positivo')
+            return render_template('/delete.html')
+
+        if idn < 0:
+            error = 'El numero de ID debe ser un numero positivo'
 
         if error is not None:
             flash(error)
@@ -130,7 +160,7 @@ def delete():
 
             db.execute(
                 'DELETE FROM data'
-                ' WHERE id=?',(idn)
+                ' WHERE id=?',(idn,)
             )
             db.commit()
 
