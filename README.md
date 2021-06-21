@@ -26,3 +26,4 @@ Pasos para correr el programa de manera local:
 10. Una vez terminado el uso del programa cierre su navegador y vuelva a la terminal y cierre la sesion activa del programa (CTRL + cpara windows)
 
 Tenga en cuenta que el programa creara una carpeta llamada 'instance' donde se encuentra para guardar la base de datos que usa durante su ejecucion.
+La misma carpeta posee un archivo de pruebas que se puede utilizar durante la ejecucion del programa
