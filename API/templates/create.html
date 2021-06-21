@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>The Loader</title>
         <style>
@@ -15,15 +15,16 @@
         <form method="POST">
             <label for="Nombre">Nombre</label>
             <input name="Nombre" id="Nombre" required>
-            <label for="Apellido">Apellidp</label>
+            <label for="Apellido"> Apellido</label>
             <input name="Apellido" id="Apellido" required>
-            <label for="Nacionalidad">Nacionalidad</label>
+            <label for="Nacionalidad"> Nacionalidad</label>
             <input name="Nacionalidad" id="Nacionalidad">
-            <label for="Fecha de Contrato">Fecha de Contrato</label>
-            <input name="Fecha de Contrato" id="Fecha de Contrato" required>
-            <label for="Sexo">Sexo</label>
+            <label for="Fecha de Contrato"> Fecha de Contrato</label>
+            <input type="date" name="Fecha de Contrato" id="Fecha de Contrato" required>
+            <label for="Sexo"> Sexo</label>
             <input name="Sexo" id="Sexo" required>
             <input type="submit" value="Cargar">
         </form>
+        <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>
     </body>
 </html>
