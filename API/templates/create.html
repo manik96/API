@@ -24,6 +24,9 @@
             <label for="Sexo"> Sexo</label>
             <input name="Sexo" id="Sexo" required>
             <input type="submit" value="Cargar">
+            {% for messages in get_flashed_messages() %}
+              {{ messages }}
+            {% endfor %}
         </form>
         <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>
     </body>
