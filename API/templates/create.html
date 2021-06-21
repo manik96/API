@@ -14,15 +14,15 @@
         <p>Solo el campo de nacionalidad es opcional, el resto es obligatorio</p>
         <form method="POST">
             <label for="Nombre">Nombre</label>
-            <input name="Nombre" id="Nombre" required>
+            <input name="Nombre" id="Nombre">
             <label for="Apellido"> Apellido</label>
-            <input name="Apellido" id="Apellido" required>
+            <input name="Apellido" id="Apellido">
             <label for="Nacionalidad"> Nacionalidad</label>
             <input name="Nacionalidad" id="Nacionalidad">
-            <label for="Fecha de Contrato"> Fecha de Contrato</label>
-            <input type="date" name="Fecha de Contrato" id="Fecha de Contrato" required>
+            <label for="FechaContrato"> Fecha de Contrato</label>
+            <input type="date" name="FechaContrato" id="FechaContrato">
             <label for="Sexo"> Sexo</label>
-            <input name="Sexo" id="Sexo" required>
+            <input name="Sexo" id="Sexo">
             <input type="submit" value="Cargar">
             {% for messages in get_flashed_messages() %}
               {{ messages }}

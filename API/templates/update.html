@@ -14,7 +14,7 @@
         <p>Tenga en cuenta que si deja algun campo vacio se asumira un valor nulo y se añadira a la base de datos, como "&lt;NA&gt;, reemplazando cualquier dato existente."</p>
         <form method="POST">
             <label for="ID">ID</label>
-            <input type="number" name="ID" id="ID" required>
+            <input type="number" name="ID" id="ID">
             <hr>
             <label for="Nombre">Nombre</label>
             <input name="Nombre" id="Nombre">
@@ -22,11 +22,12 @@
             <input name="Apellido" id="Apellido">
             <label for="Nacionalidad"> Nacionalidad</label>
             <input name="Nacionalidad" id="Nacionalidad">
-            <label for="Fecha de Contrato"> Fecha de Contrato</label>
-            <input type="date" name="Fecha de Contrato" id="Fecha de Contrato">
+            <label for="FechaContrato"> Fecha de Contrato</label>
+            <input type="date" name="FechaContrato" id="FechaContrato">
             <label for="Sexo"> Sexo</label>
             <input name="Sexo" id="Sexo">
             <input type="submit" value="Actualizar">
+            <hr>
             {% for messages in get_flashed_messages() %}
               {{ messages }}
             {% endfor %}

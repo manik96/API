@@ -14,8 +14,9 @@
         <p>Tenga en cuenta que esto es una operacion IRREVERSIBLE.</p>
         <form method="POST">
             <label for="ID">ID</label>
-            <input type="number" name="ID" id="ID" required>
+            <input type="number" name="ID" id="ID">
             <input type="submit" value="Eliminar">
+            <hr>
             {% for messages in get_flashed_messages() %}
               {{ messages }}
             {% endfor %}
