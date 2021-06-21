@@ -110,17 +110,17 @@ def update():
 
             #Para evitar la perdida de informacion asigna los valores existentes antes de insertar en la tabla
             temp = db.execute('SELECT * FROM data WHERE id=?',(idn,)).fetchone()
-
-            if name == "":
-                name = temp[1]
-            if lname == "":
-                lname = temp[2]
-            if nac == "":
-                nac = temp[3]        
-            if date == "":
-                date = temp[4]
-            if sex == "":
-                sex = temp[5]
+            if temp is not None:
+                if name == "":
+                    name = temp[1]
+                if lname == "":
+                    lname = temp[2]
+                if nac == "":
+                    nac = temp[3]        
+                if date == "":
+                    date = temp[4]
+                if sex == "":
+                    sex = temp[5]
 
             db.execute(
                 'UPDATE data'
@@ -154,7 +154,7 @@ def delete():
             flash(error)
         else:
             db = get_db()
-            
+
             #Confirmar que el numero ingresado no sea mayor al indice de la tabla
             number = db.execute('SELECT MAX(id) FROM data').fetchone()
             if idn > number[0]:
