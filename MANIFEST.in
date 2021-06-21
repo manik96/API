@@ -1,0 +1,3 @@
+include API/dbscheme.sql
+graft API/templates
+global-exclude *.pyc
