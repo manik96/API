@@ -10,8 +10,8 @@
     </head>
     <body>
         <h1>'The Loader'</h1>
-        <p>Introduzca primero el "ID" del elemento que desea actualizar.Esto es un campo obligatorio y solo se aceptan numeros enteros positivos.</p>
-        <p>Tenga en cuenta que si deja algun campo vacio se asumira un valor nulo y se añadira a la base de datos como "&lt;NA&gt;"</p>
+        <p>Introduzca primero el "ID" del elemento que desea actualizar. Esto es un campo obligatorio y solo se aceptan numeros enteros positivos.</p>
+        <p>Tenga en cuenta que si deja algun campo vacio se asumira un valor nulo y se añadira a la base de datos, como "&lt;NA&gt;, reemplazando cualquier dato existente."</p>
         <form method="POST">
             <label for="ID">ID</label>
             <input type="number" name="ID" id="ID" required>
@@ -27,6 +27,9 @@
             <label for="Sexo"> Sexo</label>
             <input name="Sexo" id="Sexo">
             <input type="submit" value="Actualizar">
+            {% for messages in get_flashed_messages() %}
+              {{ messages }}
+            {% endfor %}
         </form>
         <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>
     </body>
