@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>The Loader</title>
+        <style>
+            body {background-color: lemonchiffon;}
+            h1 {color: darkgreen;}
+            p {color:mediumorchid;}
+        </style>
+    </head>
+    <body>
+        <h1>'The Loader'</h1>
+        <p>Introduzca primero el "ID" del elemento que desea actualizar.Esto es un campo obligatorio y solo se aceptan numeros enteros positivos.</p>
+        <p>Tenga en cuenta que si deja algun campo vacio se asumira un valor nulo y se añadira a la base de datos como "&lt;NA&gt;"</p>
+        <form method="POST">
+            <label for="ID">ID</label>
+            <input type="number" name="ID" id="ID" required>
+            <hr>
+            <label for="Nombre">Nombre</label>
+            <input name="Nombre" id="Nombre">
+            <label for="Apellido"> Apellido</label>
+            <input name="Apellido" id="Apellido">
+            <label for="Nacionalidad"> Nacionalidad</label>
+            <input name="Nacionalidad" id="Nacionalidad">
+            <label for="Fecha de Contrato"> Fecha de Contrato</label>
+            <input type="date" name="Fecha de Contrato" id="Fecha de Contrato">
+            <label for="Sexo"> Sexo</label>
+            <input name="Sexo" id="Sexo">
+            <input type="submit" value="Actualizar">
+        </form>
+        <li><a href="{{ url_for('viewer.view') }}">Volver</a></li>
+    </body>
+</html>
